@@ -11,9 +11,12 @@ namespace Calculator
         static void Main(string[] args)
         {
             Console.WriteLine("Hello! Welcome to my Calculator. What would you like me to Calculate?");
+            Console.Write("[0]");
             var input = Console.ReadLine();
             var p = new Parser(input);
-            Console.WriteLine(p.getResult());
+            //Console.WriteLine(p.getResult());
+            Console.Write("[" + Parser.cursorCount + "]");
+            var newInput = Console.ReadLine();
             Console.ReadLine();
         }
     }

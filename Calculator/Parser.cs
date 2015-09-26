@@ -11,54 +11,35 @@ namespace Calculator
         public Parser(string input)
         {
             this.input = input;
-            parseComponents();
+            cursorCount++;
+            GenerateResponse();
         }
 
-        public int firstNumeral { get; set; }
-        public int secondNumeral { get; set; }
-        public char operand { get; set; }
+        public static int cursorCount;
+
         public int result { get; set; }
         public string input { get; set; }
+        public string response { get; set; }
 
-        public void parseComponents()
+        public void GenerateResponse()
         {
-            string result = "";
-            int number;
-            foreach (char c in input)
+            if (input.Contains("="))
             {
-                if ("*/+-%".Contains(c))
-                {
-                    operand = c;
-                    int.TryParse(result, out number);
-                    firstNumeral = number;
-                    result = "";
-                }
-                else
-                {
-                    result = String.Format("{0}{1}", result, c);
-                }
-            }
-            int.TryParse(result, out number);
-            secondNumeral = number;
-        }
-        public int getResult()
-        {
-           switch (operand)
-            {
-                case '*':
-                    return firstNumeral * secondNumeral;
-                case '/':
-                    return firstNumeral / secondNumeral;
-                case '+':
-                    return firstNumeral + secondNumeral;
-                case '-':
-                    return firstNumeral - secondNumeral;
-                case '%':
-                    return firstNumeral % secondNumeral;
-                default:
-                    throw new ArgumentException("Your statement is not valid.");
-            }
 
+            } else if (input == "quit" || input == "exit") {
+                this.response = "Goodbye. Thanks for using my calculator.";
+            } else if (input == "last")
+            {
+                //the response stays the same
+            }
+            
+            else
+            {
+                var calc = new Calculate(input);
+                this.result = calc.getResult();
+                this.response = this.result.ToString();
+            }
+            
         }
     }
 }
