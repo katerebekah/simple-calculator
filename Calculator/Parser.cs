@@ -26,7 +26,7 @@ namespace Calculator
             int number;
             foreach (char c in input)
             {
-                if ("*/+-".Contains(c))
+                if ("*/+-%".Contains(c))
                 {
                     operand = c;
                     int.TryParse(result, out number);
@@ -53,6 +53,8 @@ namespace Calculator
                     return firstNumeral + secondNumeral;
                 case '-':
                     return firstNumeral - secondNumeral;
+                case '%':
+                    return firstNumeral % secondNumeral;
                 default:
                     throw new ArgumentException("Your statement is not valid.");
             }
