@@ -10,17 +10,17 @@ namespace Calculator
     {
         public Parser(string input)
         {
-            parseComponents(input);
-
-
+            this.input = input;
+            parseComponents();
         }
 
         public int firstNumeral { get; set; }
         public int secondNumeral { get; set; }
         public char operand { get; set; }
         public int result { get; set; }
+        public string input { get; set; }
 
-        public void parseComponents( string input)
+        public void parseComponents()
         {
             string result = "";
             int number;
@@ -41,6 +41,22 @@ namespace Calculator
             int.TryParse(result, out number);
             secondNumeral = number;
         }
-        
+        public int getResult()
+        {
+           switch (operand)
+            {
+                case '*':
+                    return firstNumeral * secondNumeral;
+                case '/':
+                    return firstNumeral / secondNumeral;
+                case '+':
+                    return firstNumeral + secondNumeral;
+                case '-':
+                    return firstNumeral - secondNumeral;
+                default:
+                    throw new ArgumentException("Your statement is not valid.");
+            }
+
+        }
     }
 }
