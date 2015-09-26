@@ -6,15 +6,41 @@ using System.Threading.Tasks;
 
 namespace Calculator
 {
-    class Parser
+    public class Parser
     {
+        public Parser(string input)
+        {
+            parseComponents(input);
+
+
+        }
+
         public int firstNumeral { get; set; }
         public int secondNumeral { get; set; }
-        public string operand { get; set; }
+        public char operand { get; set; }
+        public int result { get; set; }
 
-        public int ParseInt(string input)
+        public void parseComponents( string input)
         {
-            return 1;
+            string result = "";
+            int number;
+            foreach (char c in input)
+            {
+                if ("*/+-".Contains(c))
+                {
+                    operand = c;
+                    int.TryParse(result, out number);
+                    firstNumeral = number;
+                    result = "";
+                }
+                else
+                {
+                    result = String.Format("{0}{1}", result, c);
+                }
+            }
+            int.TryParse(result, out number);
+            secondNumeral = number;
         }
+        
     }
 }

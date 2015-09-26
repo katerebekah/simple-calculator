@@ -1,0 +1,19 @@
+﻿using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Calculator;
+
+namespace Test
+{
+    [TestClass]
+    public class ParserTest
+    {
+        public string testInput = "12*12";
+
+        [TestMethod]
+        public void DoesParserReturnAnInt()
+        {
+            var p = new Parser(testInput);
+            
+        }
+    }
+}
