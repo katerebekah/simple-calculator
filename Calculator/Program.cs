@@ -10,14 +10,31 @@ namespace Calculator
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello! Welcome to my Calculator. What would you like me to Calculate?");
-            Console.Write("[0]");
-            var input = Console.ReadLine();
-            var p = new Parser(input);
-            //Console.WriteLine(p.getResult());
-            Console.Write("[" + Parser.cursorCount + "]");
-            var newInput = Console.ReadLine();
-            Console.ReadLine();
+            Console.WriteLine("Welcome to the Kate-tastic Calculator. Begin.");
+            bool keepGoing = true;
+            while (keepGoing)
+            {
+                Console.Write(String.Format("[{0}]>", Calculate.Counter));
+                var input = Console.ReadLine().ToLower();
+                if(input == "quit" || input == "exit")
+                {
+                    keepGoing = false;
+                    break;
+                } else if (input == "lastq")
+                {
+                    Console.WriteLine(Stack.lastQuestion);
+                }
+                else if (input == "last")
+                {
+                    Console.WriteLine(Stack.lastResponse);
+                }
+                else
+                {
+                    var c = new Calculate(input);
+                    Console.WriteLine(Calculate.response);
+                }
+
+            }
         }
     }
 }

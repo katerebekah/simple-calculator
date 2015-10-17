@@ -7,56 +7,55 @@ using System.Threading.Tasks;
 namespace Calculator
 {
     public class Calculate
-    {
-        public Calculate(string input)
+    { 
+        public Calculate(string initialInput)
         {
-            this.input = input;
+            staticInput = initialInput;
+            Counter++;
+            ParseInput(staticInput);
         }
-        public string input {
-            get; set; }
-        public int firstNumeral { get; set; }
-        public int secondNumeral { get; set; }
-        public char operand { get; set; }
+        string staticInput { get; set; }
+        public static string response { get; set; }
 
-        public void parseComponents()
+        public static int Counter;
+        void ParseInput(string input)
         {
-            string result = "";
-            int number;
-            foreach (char c in input)
+            var p = new Parser(input);
+            try
             {
-                if ("*/+-%".Contains(c))
-                {
-                    operand = c;
-                    int.TryParse(result, out number);
-                    firstNumeral = number;
-                    result = "";
-                }
-                else
-                {
-                    result = String.Format("{0}{1}", result, c);
-                }
+                p.ParseInput();
+                var results = p.results;
+                char operand = p.operand;
+                response = CalculateResponse(results, operand);
+
+                Stack.lastResponse = response;
+                Stack.lastQuestion = staticInput;
             }
-            int.TryParse(result, out number);
-            secondNumeral = number;
+            catch (ArgumentException e)
+            {
+                response = e.Message;
+                return;
+            }
         }
-        public int getResult()
+        string CalculateResponse(int[] results, char operand)
         {
             switch (operand)
             {
-                case '*':
-                    return firstNumeral * secondNumeral;
-                case '/':
-                    return firstNumeral / secondNumeral;
-                case '+':
-                    return firstNumeral + secondNumeral;
-                case '-':
-                    return firstNumeral - secondNumeral;
-                case '%':
-                    return firstNumeral % secondNumeral;
+                case ('='):
+                    return String.Format("{0} has been added.", staticInput);
+                case ('+'):
+                    return (results[0] + results[1]).ToString();
+                case ('-'):
+                    return (results[0] - results[1]).ToString();
+                case ('/'):
+                    return (results[0] / results[1]).ToString();
+                case ('*'):
+                    return (results[0] * results[1]).ToString();
+                case ('%'):
+                    return (results[0] % results[1]).ToString();
                 default:
-                    throw new ArgumentException("Your statement is not valid.");
+                    throw new ArgumentException("I'm sorry, there was an error.");
             }
-
         }
     }
 }
