@@ -20,6 +20,10 @@ namespace Calculator
         public static int Counter;
         void ParseInput(string input)
         {
+            if (inputIsntGoingToBeCalculated(input))
+            {
+                return;
+            }
             var p = new Parser(input);
             try
             {
@@ -37,7 +41,24 @@ namespace Calculator
                 return;
             }
         }
-        string CalculateResponse(int[] results, char operand)
+        public bool inputIsntGoingToBeCalculated(string input)
+        {
+            if (input == "last")
+            {
+                response = Stack.lastResponse;
+                return true;
+            } else if (input == "lastq")
+            {
+                response = Stack.lastQuestion;
+                return true;
+            } else if (input == "exit" || input == "quit")
+            {
+                response = "goodbye, fool";
+                return true;
+            }
+            return false;
+        }
+        public string CalculateResponse(int[] results, char operand)
         {
             switch (operand)
             {

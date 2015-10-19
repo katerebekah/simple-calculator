@@ -16,23 +16,12 @@ namespace Calculator
             {
                 Console.Write(String.Format("[{0}]>", Calculate.Counter));
                 var input = Console.ReadLine().ToLower();
-                if(input == "quit" || input == "exit")
+                var c = new Calculate(input);
+                if (Calculate.response == "goodbye, fool")
                 {
                     keepGoing = false;
-                    break;
-                } else if (input == "lastq")
-                {
-                    Console.WriteLine(Stack.lastQuestion);
                 }
-                else if (input == "last")
-                {
-                    Console.WriteLine(Stack.lastResponse);
-                }
-                else
-                {
-                    var c = new Calculate(input);
-                    Console.WriteLine(Calculate.response);
-                }
+                Console.WriteLine(Calculate.response);
 
             }
         }
