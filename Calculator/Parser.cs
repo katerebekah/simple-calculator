@@ -15,7 +15,6 @@ namespace Calculator
         }
         char[] operands = { '+', '-', '*', '/', '%', '=' };
         public char operand { get; set; }
-        public static Dictionary<string, int> Constants = new Dictionary<string, int>();
         public int[] results { get; set; }
 
         public void ParseInput()
@@ -27,7 +26,7 @@ namespace Calculator
             }
             else
             {
-                this.results = ReplaceConstsandStringsWithIntValues(stringArr);
+                this.results = Stack.ReplaceConstsandStringsWithIntValues(stringArr);
             }
         }
 
@@ -43,7 +42,7 @@ namespace Calculator
 
                     if (values.Length > 2)
                     {
-                        throw new ArgumentException("You can't use more than one operand per statement.");
+                        throw new ArgumentException("You can't use more than one operand per statement. Do I ask you to do two things at once?");
                     }
 
                     else if (  values[0] == "" || values[1] == "")
@@ -67,7 +66,7 @@ namespace Calculator
                 }
 
             }
-            throw new ArgumentException("There's not an operand in this input");
+            throw new ArgumentException("There's not an operand in this input. What exactly am I supposed to do with this??");
         }
 
         public void AddKeyValuePair(string[] values)
@@ -77,51 +76,28 @@ namespace Calculator
             {
                 if (values[0].Length == 1)
                 {
-                    if (!Constants.ContainsKey(values[0]))
+                    if (!Stack.Constants.ContainsKey(values[0]))
                     {
-                        Constants.Add(values[0], int.Parse(values[1]));
+                        Stack.Constants.Add(values[0], int.Parse(values[1]));
                         return;
                     }
                     else
                     {
-                        throw new ArgumentException("You can't change a constant's values after it has been initialized.");
+                        throw new ArgumentException("You can't change the value of a variable. They're not phoenixes being reborn from the ashes of your last calculation.");
                     }
                 }
                 else
                 {
-                    throw new ArgumentException("Variables can only be one character.");
+                    throw new ArgumentException("Variables can only be one character. Because MATH.");
 
                 }
             }
             else
             {
-                throw new ArgumentException("Invalid variable type. Variables must come first in an expression.");
+                throw new ArgumentException("Invalid variable type. Variables must come first in an expression. I know it's dumb, but this is my rodeo.");
             }
         }
 
-        public int[] ReplaceConstsandStringsWithIntValues(string[] inputs)
-        {
-            var values = new int[2];
-            for (var i = 0; i < inputs.Length; i++) 
-            {
-                int result;
-                if (!int.TryParse(inputs[i], out result))
-                {
-                    if (Constants.ContainsKey(inputs[i]))
-                    {
-                       values[i] = Constants[inputs[i]];
-                    }
-                    else
-                    {
-                        throw new ArgumentException("You can't use a variable that hasn't been initialized.");
-                    }
-                }
-                else
-                {
-                    values[i] = result;
-                }
-            }
-            return values;
-        }
+       
     }
 }

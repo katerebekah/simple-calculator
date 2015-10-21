@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Calculator
@@ -15,7 +16,7 @@ namespace Calculator
             while (keepGoing)
             {
                 Console.Write(String.Format("[{0}]>", Calculate.Counter));
-                var input = Console.ReadLine().ToLower();
+                var input = Regex.Replace(Console.ReadLine().ToLower(), @"\s+", "");
                 var c = new Calculate(input);
                 if (Calculate.response == "goodbye, fool")
                 {
