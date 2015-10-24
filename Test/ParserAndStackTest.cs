@@ -51,7 +51,7 @@ namespace Test
 
         // x = 7
         [TestMethod]
-        public void AddsKeyValuePairs()
+        public void StackAddsKeyValuePairs()
         {
             var input = "x=2";
             var p = new Parser(input);
@@ -61,7 +61,7 @@ namespace Test
         }
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
-        public void CantChangeValueofConstant()
+        public void StackCantChangeValueofConstant()
         {
             var input = "b=2";
             var p = new Parser(input);
@@ -95,7 +95,7 @@ namespace Test
 
         // a*7 or 3*r
         [TestMethod]
-        public void GetsVariableValueFromDictionary()
+        public void GetsVariableValueFromStackDictionary()
         {
             var input1 = "a=10";
             var input2 = "a*8";

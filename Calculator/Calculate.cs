@@ -69,7 +69,14 @@ namespace Calculator
                 case ('-'):
                     return (results[0] - results[1]).ToString();
                 case ('/'):
-                    return (results[0] / results[1]).ToString();
+                    try
+                    {
+                        return (results[0] / results[1]).ToString();
+
+                    } catch (DivideByZeroException)
+                    {
+                        throw new ArgumentException("You can't divide by zero. Why you do dis?");
+                    }
                 case ('*'):
                     return (results[0] * results[1]).ToString();
                 case ('%'):

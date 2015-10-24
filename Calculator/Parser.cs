@@ -94,7 +94,7 @@ namespace Calculator
             }
             else
             {
-                throw new ArgumentException("Invalid variable type. Variables must come first in an expression. I know it's dumb, but this is my rodeo.");
+                throw new ArgumentException("Invalid input. There's a number of very good reasons why this failed. Your number is too big, you didn't put your variable first, you're using a two variables you haven't instantiated, etc.");
             }
         }
 
