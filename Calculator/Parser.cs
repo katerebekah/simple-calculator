@@ -2,36 +2,63 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Calculator
 {
     public class Parser
     {
-        string input;
-        public Parser(string input)
-        {
-            this.input = input;
-        }
+        public Parser() { }
         char[] operands = { '+', '-', '*', '/', '%', '=' };
         public char operand { get; set; }
-        public int[] results { get; set; }
 
-        public void ParseInput()
+        public int[] Parse(string input)
         {
-            var stringArr = SplitOnOperand();
+            input = Regex.Replace(input, @"\s+", "").ToLower();
+            var stringArr = SplitOnOperand(input);
             if (operand == '=')
             {
                 AddKeyValuePair(stringArr);
+                throw new ArgumentException(String.Format("{0} has been added to the dictionary.", input));
             }
             else
             {
-                this.results = Stack.ReplaceConstsandStringsWithIntValues(stringArr);
+                return parseStringArrToIntArr(stringArr);
             }
         }
 
+        public int[] parseStringArrToIntArr(string[] inputs)
+        {
+            var values = new int[2];
+            for (var i = 0; i < inputs.Length; i++)
+            {
+                int result;
+                if (!int.TryParse(inputs[i], out result))
+                {
+                    values[i] = findConstantInDictionary(inputs[i]);
+                }
+                else
+                {
+                    values[i] = result;
+                }
+            }
+            return values;
+        }
 
-        public string[] SplitOnOperand()
+        public int findConstantInDictionary(string constant)
+        {
+            if (Stack.Constants.ContainsKey(constant))
+            {
+                return Stack.Constants[constant];
+            }
+            else
+            {
+                throw new ArgumentException("You can't use a variable that hasn't been initialized. You need to set the value equal to something before you call on it.");
+            }
+        }
+
+        public string[] SplitOnOperand(string input)
         {
             foreach (char o in operands)
             {

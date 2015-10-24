@@ -12,19 +12,38 @@ namespace Calculator
         static void Main(string[] args)
         {
             Console.WriteLine("Welcome to the Kate-tastic Calculator. Begin.");
-            bool keepGoing = true;
-            while (keepGoing)
-            {
-                Console.Write(String.Format("[{0}]>", Calculate.Counter));
-                var input = Regex.Replace(Console.ReadLine().ToLower(), @"\s+", "");
-                var c = new Calculate(input);
-                if (Calculate.response == "goodbye, fool")
-                {
-                    keepGoing = false;
-                }
-                Console.WriteLine(Calculate.response);
+            bool keepgoing = true;
+            int Counter = 0;
 
+            var CalcList = new List<ICalculator>();
+            CalcList.Add(new Add());
+            CalcList.Add(new Subtract());
+            CalcList.Add(new Multiply());
+            CalcList.Add(new Divide());
+            CalcList.Add(new Modulus());
+
+            var c = new Calc(CalcList);
+            var p = new Parser();
+            while (keepgoing)
+            {
+                Console.Write(String.Format("[{0}]>", Counter));
+                var input = Console.ReadLine();
+                
+                string response = "";
+                try {
+                    int[] values = p.Parse(input);
+                    char op = p.operand;
+                    response = c.Calculator(values[0], values[1], op).ToString();
+                }
+                catch (Exception e)
+                {
+                    response = e.Message;
+                }
+                Console.WriteLine(response);
+                Counter += 1;
             }
+            
         }
+            
     }
 }
